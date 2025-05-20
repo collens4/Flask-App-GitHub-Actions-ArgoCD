@@ -60,8 +60,24 @@ jobs:
             - name: Push Docker Image
               run: |
                 docker push korlins/demo-app:${{ env.VERSION }}
+            
+            # Update the k8s manifest file
+            - name: Update k8s manifest file
+              run: |
+                cat deploy/deploy.yaml
+                sed -i "s|image: korlins/demo-app:.*|image: korlins/demo-app:${{ env.VERSION }}|g" deploy/deploy.yaml
+                cat deploy/deploy.yaml
 
-                  
-                
-
+            # Update Github
+            - name: Commit the changes
+              run: |
+                git config --global user.email "<collenito@gmail.com>"
+                git config --global user.name "github-actions[bot]"
+                git add deploy/deploy.yaml
+                git commit -m "Update k8s manifest with new image version - ${{ env.VERSION }}"
+                git remote set-url origin https://github.actions:${{ secrets.GITHUB_TOKEN }}@github.com/korlins/
+                Flask-App-Github-Actions-ArgoCD.git
+                git push origin master
+              
+              
             
