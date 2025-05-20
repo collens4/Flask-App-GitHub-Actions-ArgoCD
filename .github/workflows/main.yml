@@ -75,8 +75,7 @@ jobs:
                 git config --global user.name "github-actions[bot]"
                 git add deploy/deploy.yaml
                 git commit -m "Update k8s manifest with new image version - ${{ env.VERSION }}"
-                git remote set-url origin https://github.actions:${{ secrets.GITHUB_TOKEN }}@github.com/korlins/
-                Flask-App-Github-Actions-ArgoCD.git
+                git remote set-url origin https://github.actions:${{ secrets.GITHUB_TOKEN }}@https://github.com/collens4/Flask-App-GitHub-Actions-ArgoCD.git
                 git push origin master
               
               
